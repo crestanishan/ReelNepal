@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fragment_movie_tag_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+
+        <TextView
+            android:id="@+id/tv_movie_tag_Movie_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            android:text="@string/movie_name"
+            android:textSize="25sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv__movie_tag_Name_Nepali"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            android:text="@string/name_nepali"
+            android:textSize="20sp">
+
+        </TextView>
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_movie_tag_released_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="2"
+                android:text="@string/released_date"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_movie_tag_run_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/run_time"
+                android:layout_toRightOf="@+id/tv_released_date"
+                android:maxLines="1"
+                android:textSize="12sp"/>
+
+        </FrameLayout>
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="110dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                >
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/movie_tag_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_action_action_search" />
+
+            </android.support.v7.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/tv_movie_tag_synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/movie_image"
+                android:ellipsize="none"
+                android:scrollHorizontally="false"
+                android:text="@string/synopsis"
+                android:textSize="13sp" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>
