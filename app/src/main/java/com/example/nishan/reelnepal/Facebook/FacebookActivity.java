@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nishan.reelnepal.Movie.MovieProfile2;
+import com.example.nishan.reelnepal.Movie.PostActivity;
 import com.example.nishan.reelnepal.R;
 import com.example.nishan.reelnepal.TestActivity;
 import com.facebook.AccessToken;
@@ -108,7 +109,7 @@ public class FacebookActivity extends AppCompatActivity {
                         getData(object);
                        // Bundle facebookData = getFacebookData(object);
 
-                       Intent i = new Intent(getApplicationContext(),TestActivity.class);
+                       Intent i = new Intent(getApplicationContext(),PostActivity.class);
                       // i.putExtra("email", FbEmail);
                        i.putExtra("FbID",fbID);
                        i.putExtra("movieId",movieID);
@@ -164,7 +165,7 @@ public class FacebookActivity extends AppCompatActivity {
             //get user ID
            // txtEmail.setText(AccessToken.getCurrentAccessToken().getUserId());
 
-            Intent i = new Intent(getApplicationContext(),TestActivity.class);
+            Intent i = new Intent(getApplicationContext(),PostActivity.class);
             i.putExtra("FbID",AccessToken.getCurrentAccessToken().getUserId());
             i.putExtra("movieId",movieID);
             i.putExtra("rating",rating);
