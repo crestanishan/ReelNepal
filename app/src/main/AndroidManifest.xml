@@ -11,12 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"
-            >
-
-        </meta-data>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"></meta-data>
 
         <activity
             android:name=".MainActivity"
@@ -29,15 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Actor.ActorProfileActivity" />
         <activity android:name=".Activities.VideoPlayer" />
-        <activity android:name=".Navigation.NepaliNews_Nav.NepaNewsDetails" />
         <activity android:name=".Facebook.FacebookActivity" />
         <activity
             android:name=".sample.SampleActivity"
             android:label="@string/title_activity_sample"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".TestActivity"></activity>
     </application>
 
 </manifest>

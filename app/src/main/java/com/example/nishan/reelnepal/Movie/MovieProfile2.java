@@ -1,7 +1,9 @@
 package com.example.nishan.reelnepal.Movie;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,6 +44,8 @@ public class MovieProfile2 extends Fragment {
 
     Button buttonSubmit;
 
+    int id;
+
     public static MovieProfile2 newInstanceFromMovieTags(MovieTagsItem movieTagsItem) {
 
 
@@ -52,6 +56,8 @@ public class MovieProfile2 extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
 
     @Nullable
@@ -74,10 +80,14 @@ public class MovieProfile2 extends Fragment {
         MovieTagsItem movieTagsItem = (MovieTagsItem)getArguments().getSerializable("movieTag");
         Log.d(TAG, "Movie Id: "+ movieTagsItem.getMovieId());
 
-          int id = movieTagsItem.getMovieId();
+        id = movieTagsItem.getMovieId();
+
+        // getDataFromFB();
 
 
-
+      /*  SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String email = sharedPref.getString("email", "defaultValue" );
+        Toast.makeText(getContext(),"FB Email: "+email, Toast.LENGTH_LONG).show();*/
 
 
 
@@ -132,6 +142,8 @@ public class MovieProfile2 extends Fragment {
 
                             facebookPost();
 
+
+
                         }
                     });
 
@@ -177,6 +189,13 @@ public class MovieProfile2 extends Fragment {
         return view;
     }
 
+    private void getDataFromFB() {
+
+        String strtext = getArguments().getString("email");
+        Toast.makeText(getContext(),"FB Email: "+strtext, Toast.LENGTH_LONG).show();
+
+    }
+
     private void facebookPost() {
         //check login
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -184,7 +203,11 @@ public class MovieProfile2 extends Fragment {
 
             Log.d(TAG, "FB login Status" + "Signed Out");
 
+            String rating=String.valueOf(ratingBar.getRating());
+
             Intent i = new Intent(getContext(),FacebookActivity.class);
+            i.putExtra("movieId",id);
+            i.putExtra("rating",rating);
             getContext().startActivity(i);
 
         } else {
@@ -193,8 +216,17 @@ public class MovieProfile2 extends Fragment {
 
             String rating=String.valueOf(ratingBar.getRating());
             Toast.makeText(getContext(), rating, Toast.LENGTH_LONG).show();
+
+            Intent i = new Intent(getContext(),FacebookActivity.class);
+            i.putExtra("movieId",id);
+            i.putExtra("rating",rating);
+            getContext().startActivity(i);
+
         }
     }
+
+
+
 
 
     @Override

@@ -1,19 +1,27 @@
 package com.example.nishan.reelnepal.Facebook;
 
+
+
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nishan.reelnepal.Movie.MovieProfile2;
 import com.example.nishan.reelnepal.R;
+import com.example.nishan.reelnepal.TestActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -42,6 +50,14 @@ public class FacebookActivity extends AppCompatActivity {
     ProgressDialog mDialog;
     ImageView imgAvatar;
 
+    String FbEmail;
+
+    String fbID;
+
+    String rating;
+
+    int movieID;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -54,11 +70,21 @@ public class FacebookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_facebook);
 
+        Intent intent = getIntent();
+
+        movieID = intent.getIntExtra("movieId", 0);
+        Toast.makeText(getApplicationContext(),"Movie Id pass :"+movieID,Toast.LENGTH_LONG).show();
+
+        rating = intent.getStringExtra("rating");
+        Toast.makeText(getApplicationContext(),"Rating pass :"+rating,Toast.LENGTH_LONG).show();
+
+
         callbackManager = CallbackManager.Factory.create();
         Log.d(TAG,"callbackManager"+callbackManager);
 
 
-        txtEmail = findViewById(R.id.txtEmail);
+
+       // txtEmail = findViewById(R.id.txtEmail);
 
         imgAvatar = findViewById(R.id.avatar);
 
@@ -73,7 +99,7 @@ public class FacebookActivity extends AppCompatActivity {
 
                // String accessToken = loginResult.getAccessToken().getToken();
 
-                final GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         mDialog.dismiss();
@@ -81,6 +107,31 @@ public class FacebookActivity extends AppCompatActivity {
 
                         getData(object);
                        // Bundle facebookData = getFacebookData(object);
+
+                       Intent i = new Intent(getApplicationContext(),TestActivity.class);
+                      // i.putExtra("email", FbEmail);
+                       i.putExtra("FbID",fbID);
+                       i.putExtra("movieId",movieID);
+                       i.putExtra("rating",rating);
+                        startActivity(i);
+                        Log.d(TAG,"movie ID:"+movieID);
+
+                       /* //sending email to MovieProfile2 fragment
+                        Bundle bundle = new Bundle();
+                        bundle.putString("email",FbEmail);
+                        Log.d(TAG, "email "+FbEmail);
+
+                        MovieProfile2 fragobj = new MovieProfile2();
+                        fragobj.setArguments(bundle);
+
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.facebook, fragobj);
+                        ft.commit();*/
+
+                       // transaction.replace(R.id.fragment_single, fragInfo);
+                        //transaction.commit();
+
+
                     }
                 });
 
@@ -90,6 +141,8 @@ public class FacebookActivity extends AppCompatActivity {
                 request.setParameters(parameters);
                 request.executeAsync();
                 Log.d(TAG,"bundle response"+request.executeAsync());
+
+
 
 
 
@@ -109,12 +162,32 @@ public class FacebookActivity extends AppCompatActivity {
         //if already login
         if (AccessToken.getCurrentAccessToken() !=null){
             //get user ID
-            txtEmail.setText(AccessToken.getCurrentAccessToken().getUserId());
+           // txtEmail.setText(AccessToken.getCurrentAccessToken().getUserId());
+
+            Intent i = new Intent(getApplicationContext(),TestActivity.class);
+            i.putExtra("FbID",AccessToken.getCurrentAccessToken().getUserId());
+            i.putExtra("movieId",movieID);
+            i.putExtra("rating",rating);
+            startActivity(i);
+
+
         }
 
-        
+
         printKeyHash();
+
+       // passEmailToMovieProfile2();
     }
+
+ /*   private void passEmailToMovieProfile2() {
+        Bundle bundle = new Bundle();
+        bundle.putString("email",FbEmail);
+        Log.d(TAG, "email "+FbEmail);
+// set Fragmentclass Arguments
+        MovieProfile2 fragobj = new MovieProfile2();
+        fragobj.setArguments(bundle);
+    }*/
+
 
     private void printKeyHash() {
         try {
@@ -142,7 +215,24 @@ public class FacebookActivity extends AppCompatActivity {
 
             Picasso.with(this).load(picture_pofile.toString()).into(imgAvatar);
 
-            txtEmail.setText(object.getString("email"));
+//            txtEmail.setText(object.getString("email"));
+
+            FbEmail = object.getString("email");
+           // Toast.makeText(FacebookActivity.this, "Email: "+FbEmail,Toast.LENGTH_LONG).show();
+
+            fbID = object.getString("id");
+
+
+
+
+          /*  SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("email", FbEmail);
+            Log.d(TAG, "Email in Sp "+editor.putString("email", FbEmail));
+            editor.commit();*/
+
+
+
         }
         catch (MalformedURLException e){
 
