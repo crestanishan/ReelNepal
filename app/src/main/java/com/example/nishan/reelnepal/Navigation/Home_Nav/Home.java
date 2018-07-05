@@ -1,5 +1,6 @@
 package com.example.nishan.reelnepal.Navigation.Home_Nav;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -55,10 +56,18 @@ public class Home extends Fragment
 
     ApiInterface apiInterface;
 
+    ProgressDialog dialog;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.layout_home, container,false);
+
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage("Loading..");
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+        dialog.show();
 
         onNewsItemClickInterface = this;
         // sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
@@ -66,8 +75,8 @@ public class Home extends Fragment
        final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
-      final RecyclerView recycleViewTopMovies = view.findViewById(R.id.recyclerView_TopMovies);
-      recycleViewTopMovies.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+      final RecyclerView recycleViewTopVideos = view.findViewById(R.id.recyclerView_TopVideos);
+      recycleViewTopVideos.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
         final RecyclerView recycleViewThisWeekMovies = view.findViewById(R.id.recyclerView_ThisWeekMovies);
         recycleViewThisWeekMovies.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
@@ -120,11 +129,11 @@ public class Home extends Fragment
                     //adapterViewFlipper.setFlipInterval(1000);
                     //adapterViewFlipper.startFlipping();
 
-
+                    dialog.hide();
                     //set adapter
                     recyclerView.setAdapter(new RecyclerViewAdapter(getContext(),featuredMoviesItems));
 
-                    recycleViewTopMovies.setAdapter(new TopMoviesVideoAdapter(getContext(),topVideosItems));
+                    recycleViewTopVideos.setAdapter(new TopMoviesVideoAdapter(getContext(),topVideosItems));
 
                     if (thisWeekMoviesItems.isEmpty() ){
 

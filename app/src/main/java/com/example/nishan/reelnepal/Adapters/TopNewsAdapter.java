@@ -72,10 +72,23 @@ public class TopNewsAdapter extends RecyclerView.Adapter<TopNewsAdapter.ViewHold
             Log.d(TAG, "Date format problem:"+e);
         }
 
+        holder.tv_RefinedContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(mCtx," News ID : "+topNewsItem.getNewsId(),Toast.LENGTH_LONG).show();
+
+
+                onNewsItemClickInterface.onItemClick(topNewsItem);
+
+
+            }
+        });
+
         holder.tv_NewsTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mCtx,"Youtube News ID : "+topNewsItem.getNewsId(),Toast.LENGTH_LONG).show();
+                Toast.makeText(mCtx," News ID : "+topNewsItem.getNewsId(),Toast.LENGTH_LONG).show();
 
                 /*try {
                     Intent intent = new Intent(mCtx, NepaNewsDetails.class);
