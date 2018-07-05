@@ -3,15 +3,12 @@ package com.example.nishan.reelnepal.Facebook;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -19,14 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nishan.reelnepal.Movie.MovieProfile2;
 import com.example.nishan.reelnepal.Movie.PostActivity;
 import com.example.nishan.reelnepal.R;
-import com.example.nishan.reelnepal.TestActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
@@ -57,13 +53,17 @@ public class FacebookActivity extends AppCompatActivity {
 
     String rating;
 
+    String fbName;
+
     int movieID;
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
     }
 
     @Override
@@ -79,9 +79,12 @@ public class FacebookActivity extends AppCompatActivity {
         rating = intent.getStringExtra("rating");
         Toast.makeText(getApplicationContext(),"Rating pass :"+rating,Toast.LENGTH_LONG).show();
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
         Log.d(TAG,"callbackManager"+callbackManager);
+
+        Toast.makeText(getApplicationContext(),"this is fb oncreate",Toast.LENGTH_LONG).show();
 
 
 
@@ -90,7 +93,7 @@ public class FacebookActivity extends AppCompatActivity {
         imgAvatar = findViewById(R.id.avatar);
 
         LoginButton loginButton = findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+        loginButton.setReadPermissions(Arrays.asList("public_profile",  "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -108,8 +111,13 @@ public class FacebookActivity extends AppCompatActivity {
 
                         getData(object);
                        // Bundle facebookData = getFacebookData(object);
+                        Toast.makeText(getApplicationContext(),"testing",Toast.LENGTH_LONG).show();
 
-                       Intent i = new Intent(getApplicationContext(),PostActivity.class);
+
+
+
+
+                        Intent i = new Intent(getApplicationContext(),PostActivity.class);
                       // i.putExtra("email", FbEmail);
                        i.putExtra("FbID",fbID);
                        i.putExtra("movieId",movieID);
@@ -138,7 +146,7 @@ public class FacebookActivity extends AppCompatActivity {
 
                 //Request Graph API
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, email");
+                parameters.putString("fields", "id, name, email");
                 request.setParameters(parameters);
                 request.executeAsync();
                 Log.d(TAG,"bundle response"+request.executeAsync());
@@ -223,14 +231,17 @@ public class FacebookActivity extends AppCompatActivity {
 
             fbID = object.getString("id");
 
+            fbName = object.getString("name");
 
+            Test.Id=fbID;
+            Test.Email=FbEmail;
+            Test.Name = fbName;
 
+          /*  SharedPreferences prefs = getSharedPreferences("sharedf", Context.MODE_PRIVATE);
+            prefs.edit().putString("fbID",Test.Id)
+                        .putString("fbEmail",Test.Email)
+                        .putString("fbName", Test.Name).commit();*/
 
-          /*  SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("email", FbEmail);
-            Log.d(TAG, "Email in Sp "+editor.putString("email", FbEmail));
-            editor.commit();*/
 
 
 

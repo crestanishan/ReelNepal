@@ -1,6 +1,7 @@
 package com.example.nishan.reelnepal;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -14,11 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nishan.reelnepal.Actor.ActorProfileActivity;
 import com.example.nishan.reelnepal.Adapters.ActorListAdapter;
 import com.example.nishan.reelnepal.Facebook.FacebookActivity;
+import com.example.nishan.reelnepal.Facebook.Test;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
 import com.example.nishan.reelnepal.Movie.MovieProfileActivity;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Home;
@@ -29,8 +34,8 @@ import com.example.nishan.reelnepal.Navigation.Videos_Nav.Videos;
 import com.example.nishan.reelnepal.Search.Actor;
 import com.example.nishan.reelnepal.Search.ApiClient;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity
 
     ApiInterface apiInterface;
 
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,20 @@ public class MainActivity extends AppCompatActivity
 
         apiInterface  = ApiClient.getClient().create(ApiInterface.class);
 
+       // FacebookSdk.sdkInitialize(getApplicationContext());
+        //CallbackManager callbackManager = CallbackManager.Factory.create();
+
+
+
+
+       // FacebookActivity facebookActivity = new FacebookActivity();
+
+
+
+
+
+     //  Toast.makeText(getApplicationContext(),"FbID: "+Test.Id,Toast.LENGTH_LONG).show();
+
 
 
 
@@ -83,6 +103,30 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // define navigation headers
+        TextView fbName =  navigationView.getHeaderView(0).findViewById(R.id.fb_name);
+        TextView fbEmail =  navigationView.getHeaderView(0).findViewById(R.id.fb_email);
+        ImageView fbPic = navigationView.getHeaderView(0).findViewById(R.id.fb_pic);
+
+        //getting data of fb through Test class
+        String fbID = Test.Id;
+        String facebookEmail = Test.Email;
+        String facebookName = Test.Name;
+
+       /* String fbID = prefs.getString("fbID", "default value");
+        String facebookEmail = prefs.getString("fbEmail", "default value");
+        String facebookName = prefs.getString("fbName", "default value");*/
+
+
+        Toast.makeText(getApplicationContext(),"FbID: "+fbID,Toast.LENGTH_LONG).show();
+
+        Picasso.with(this).load( "https://graph.facebook.com/"+fbID+"/picture?width=200&height=200").into(fbPic);
+
+        fbEmail.setText(facebookEmail);
+
+        fbName.setText(facebookName);
+
 
         displaySelectedScreen(R.id.nav_home);
     }
