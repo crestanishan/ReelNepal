@@ -15,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity
         TextView fbEmail =  navigationView.getHeaderView(0).findViewById(R.id.fb_email);
         ImageView fbPic = navigationView.getHeaderView(0).findViewById(R.id.fb_pic);
 
+        LinearLayout layout = findViewById(R.id.nav_header);
+
         //getting data of fb through Test class
         String fbID = Test.Id;
         String facebookEmail = Test.Email;
@@ -126,6 +130,8 @@ public class MainActivity extends AppCompatActivity
         fbEmail.setText(facebookEmail);
 
         fbName.setText(facebookName);
+
+     
 
 
         displaySelectedScreen(R.id.nav_home);
