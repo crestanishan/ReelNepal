@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.nishan.reelnepal.APIClient.APIClient;
 import com.example.nishan.reelnepal.Facebook.FacebookActivity;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
+import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.MovieTagsAdapter;
 import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaliNewsModel.MovieTagsItem;
 import com.example.nishan.reelnepal.R;
@@ -90,7 +91,7 @@ public class MovieProfile2 extends Fragment {
         Toast.makeText(getContext(),"FB Email: "+email, Toast.LENGTH_LONG).show();*/
 
 
-
+        ScreenCheck.currentScreen = 3;
 
 
 

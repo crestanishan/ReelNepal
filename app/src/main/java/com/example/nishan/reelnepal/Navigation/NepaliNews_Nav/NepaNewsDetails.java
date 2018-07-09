@@ -21,6 +21,7 @@ import com.example.nishan.reelnepal.Adapters.RecyclerViewAdapter;
 import com.example.nishan.reelnepal.Adapters.TopNewsAdapter;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
 import com.example.nishan.reelnepal.Movie.MovieProfile2;
+import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Front_Models.TopNewsItem;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Front_Models.TopVideosItem;
 import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaliNewsModel.CrewTagsItem;
@@ -67,18 +68,20 @@ public class NepaNewsDetails extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.layout_news_details, container, false);
 
+
        TopNewsItem topNewsItem = (TopNewsItem) getArguments().getSerializable("News");
 
         Log.d(TAG, "Actor Id: "+ topNewsItem.getNewsId());
         int id = topNewsItem.getNewsId();
-
-
 
         //getting news id
         //  Intent intent = getIntent();
         //int id = intent.getIntExtra("ID", 0);
 
         onMovieTagsItemClickInterface = this;
+
+        ScreenCheck.currentScreen = 2;
+
 
 
 

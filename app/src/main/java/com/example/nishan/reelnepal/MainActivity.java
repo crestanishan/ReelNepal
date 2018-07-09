@@ -2,6 +2,7 @@ package com.example.nishan.reelnepal;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
@@ -28,8 +29,10 @@ import com.example.nishan.reelnepal.Facebook.FacebookActivity;
 import com.example.nishan.reelnepal.Facebook.Test;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
 import com.example.nishan.reelnepal.Movie.MovieProfileActivity;
+import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Home;
 import com.example.nishan.reelnepal.Navigation.MovieCalender_Nav.MovieCalender;
+import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaNewsDetails;
 import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaliNews;
 import com.example.nishan.reelnepal.Navigation.News_Nav.News;
 import com.example.nishan.reelnepal.Navigation.Videos_Nav.Videos;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity
     ApiInterface apiInterface;
 
     SharedPreferences prefs;
+
+    FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +136,6 @@ public class MainActivity extends AppCompatActivity
 
         fbName.setText(facebookName);
 
-     
 
 
         displaySelectedScreen(R.id.nav_home);
@@ -198,7 +202,43 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (ScreenCheck.currentScreen == 1) {
+                super.onBackPressed();
+            }
+
+           else if (ScreenCheck.currentScreen == 2) {
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contain_main, new Home());
+                ft.commit();
+
+                Toast.makeText(getApplicationContext(),"This is home",Toast.LENGTH_LONG).show();
+
+                return;
+            }
+
+            else if (ScreenCheck.currentScreen == 3){
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contain_main, new Home());
+                ft.commit();
+
+                return;
+            }
+
+            else if (ScreenCheck.currentScreen == 4){
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contain_main, new Home());
+                ft.commit();
+
+                return;
+            }
+
+            else if (ScreenCheck.currentScreen == 5){
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contain_main, new Home());
+                ft.commit();
+
+                return;
+            }
         }
 
                 if (searchView.isSearchOpen()){
@@ -317,6 +357,8 @@ public class MainActivity extends AppCompatActivity
 
             ft.replace(R.id.contain_main,MovieProfileActivity.newInstance(actor));
             ft.commit();
+
+            searchView.closeSearch();
 
 
 //            getIntent().putExtra("Object",actor);

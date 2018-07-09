@@ -23,6 +23,7 @@ import com.example.nishan.reelnepal.Adapters.ThisWeekMoviesAdapter;
 import com.example.nishan.reelnepal.Adapters.TopMoviesVideoAdapter;
 import com.example.nishan.reelnepal.Adapters.TopNewsAdapter;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
+import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Front_Models.FeaturedMoviesItem;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Front_Models.Front;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Front_Models.NextWeekMoviesItem;
@@ -71,6 +72,8 @@ public class Home extends Fragment
 
         onNewsItemClickInterface = this;
         // sliderLayout = (SliderLayout) view.findViewById(R.id.slider);
+
+        ScreenCheck.currentScreen = 1;
 
        final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
@@ -179,7 +182,9 @@ public class Home extends Fragment
             @Override
             public void onFailure(Call call, Throwable t) {
 
-                Toast.makeText(getContext(), "Failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Connection Failed",Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
 
 
             }
@@ -205,7 +210,6 @@ public class Home extends Fragment
     public void onItemClick(TopNewsItem topNewsItem) {
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-
         ft.replace(R.id.contain_main, NepaNewsDetails.newInstanceFromHome(topNewsItem));
         ft.commit();
 

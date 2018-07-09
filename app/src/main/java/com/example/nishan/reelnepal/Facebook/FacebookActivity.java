@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nishan.reelnepal.Movie.PostActivity;
+import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -84,9 +85,9 @@ public class FacebookActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         Log.d(TAG,"callbackManager"+callbackManager);
 
-        Toast.makeText(getApplicationContext(),"this is fb oncreate",Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),"this is fb oncreate",Toast.LENGTH_LONG).show();
 
-
+        ScreenCheck.currentScreen = 4;
 
        // txtEmail = findViewById(R.id.txtEmail);
 

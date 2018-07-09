@@ -1,5 +1,6 @@
 package com.example.nishan.reelnepal.Movie;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import com.example.nishan.reelnepal.APIClient.APIClient;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
 import com.example.nishan.reelnepal.Movie.MovieRating.Model.MovieRatingInsertModel;
 import com.example.nishan.reelnepal.R;
+import com.facebook.AccessToken;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,6 +75,11 @@ public class PostActivity extends AppCompatActivity {
                     Log.i(TAG, "post submitted to API." + response.body().toString());
 
                 }
+
+
+               onBackPressed();
+
+
 
 
             }

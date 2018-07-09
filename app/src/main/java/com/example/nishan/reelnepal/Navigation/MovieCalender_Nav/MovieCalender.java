@@ -1,5 +1,6 @@
 package com.example.nishan.reelnepal.Navigation.MovieCalender_Nav;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.nishan.reelnepal.Interface.ApiInterface;
+import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.Navigation.MovieCalender_Nav.Calender_Models.Calender;
 import com.example.nishan.reelnepal.Navigation.MovieCalender_Nav.Calender_Models.GeneralItem;
 import com.example.nishan.reelnepal.Navigation.MovieCalender_Nav.Calender_Models.ResultItem;
@@ -46,7 +48,7 @@ public class MovieCalender extends Fragment {
     private Adapter adapter;
 
 
-
+    ProgressDialog dialog;
 
 
 
@@ -55,7 +57,15 @@ public class MovieCalender extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_movie_calender, container, false);
 
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage("Loading..");
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+        dialog.show();
+
         apiInterface = CalenderApiClient.getClient().create(ApiInterface.class);
+
+        ScreenCheck.currentScreen = 5;
 
        // final RecyclerView recycleViewMovieCalender = view.findViewById(R.id.recyclerView_movie_calender);
         //recycleViewMovieCalender.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
@@ -115,6 +125,7 @@ public class MovieCalender extends Fragment {
                     mRecyclerView.setAdapter(adapter);
 
 
+                    dialog.hide();
 
 
                 } else {
@@ -127,7 +138,9 @@ public class MovieCalender extends Fragment {
             @Override
             public void onFailure(Call call, Throwable t) {
 
-                Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Connection Failed", Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
 
 
             }
