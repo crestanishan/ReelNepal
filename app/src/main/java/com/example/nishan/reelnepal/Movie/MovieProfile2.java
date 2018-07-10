@@ -145,6 +145,9 @@ public class MovieProfile2 extends Fragment {
                     TextView textViewSynopsis = view.findViewById(R.id.tv_synopsis);
                     textViewSynopsis.setText(movieInfo.getResult().getSynopsis());
 
+                    TextView textViewCertificate = view.findViewById(R.id.tv_Certificatet);
+                    textViewCertificate.setText(movieInfo.getResult().getCensorCertificate());
+
 
                     ImageView img = view.findViewById(R.id.movie_image);
 
@@ -249,7 +252,7 @@ public class MovieProfile2 extends Fragment {
 
                     String output = "";
 
-                  
+
                     for (int i = 0; i < result.size(); i++) {
                         //Append all the values to a string
                         output += result.get(i).getGenreName();

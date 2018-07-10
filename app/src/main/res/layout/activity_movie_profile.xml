@@ -18,8 +18,8 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/movie_image"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
                 android:scaleType="fitXY"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/ic_launcher_background"
@@ -78,11 +78,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <TextView
                 android:id="@+id/tv_released_date"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="24dp"
@@ -95,12 +95,24 @@
 
             <TextView
                 android:id="@+id/tv_run_time"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/run_time"
                 android:maxLines="1"
                 android:textSize="15sp"
+                android:layout_weight="2"
+                />
+
+            <TextView
+                android:id="@+id/tv_Certificatet"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="8dp"
+                android:maxLines="2"
+                android:text="@string/Certificate"
+                android:textSize="15sp"
+                android:layout_marginRight="24dp"
                 />
 
         </LinearLayout>
@@ -122,6 +134,7 @@
             android:maxLines="1"
             android:textSize="15sp"
             android:layout_marginLeft="24dp"
+
             />
 
         <View
