@@ -129,7 +129,7 @@ public class MovieProfileActivity extends Fragment {
 
                     ratingBar = view.findViewById(R.id.ratingBar);
 
-                    buttonSubmit = view.findViewById(R.id.btn_submit);
+                    //buttonSubmit = view.findViewById(R.id.btn_submit);
 
                     /*ratingBar.setOnTouchListener(new View.OnTouchListener() {
                         @Override
@@ -139,14 +139,14 @@ public class MovieProfileActivity extends Fragment {
                         }
                     });*/
 
-                    buttonSubmit.setOnClickListener(new View.OnClickListener() {
+                 /*   buttonSubmit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
                             facebookPost();
 
                         }
-                    });
+                    });*/
 
                     if(movieInfo.getResult().getCoverPhoto() !=null && movieInfo.getResult().getCoverPhoto().length()>0)
                     {

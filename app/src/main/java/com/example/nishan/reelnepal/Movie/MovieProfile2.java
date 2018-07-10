@@ -1,6 +1,7 @@
 package com.example.nishan.reelnepal.Movie;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,9 +42,13 @@ public class MovieProfile2 extends Fragment {
 
     MovieProfile movieInfo;
 
-    RatingBar ratingBar;
+    RatingBar ratingBar1;
 
     Button buttonSubmit;
+
+    Dialog rankDialog;
+
+    String rateValue;
 
     int id;
 
@@ -131,11 +136,90 @@ public class MovieProfile2 extends Fragment {
                     TextView textViewSynopsis = view.findViewById(R.id.tv_synopsis);
                     textViewSynopsis.setText(movieInfo.getResult().getSynopsis());
 
+
                     ImageView img = view.findViewById(R.id.movie_image);
 
-                    ratingBar = view.findViewById(R.id.ratingBar);
+                    ratingBar1 = view.findViewById(R.id.ratingBar);
 
-                    buttonSubmit = view.findViewById(R.id.btn_submit);
+                   /* ratingBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Toast.makeText(getContext(),"Rating bar is clicked: ", Toast.LENGTH_LONG).show();
+
+
+
+                            rankDialog = new Dialog(getContext(), R.style.FullHeightDialog);
+                            rankDialog.setContentView(R.layout.layout_rank_dialog);
+                            rankDialog.setCancelable(true);
+
+                            String rating=String.valueOf(ratingBar.getRating());
+                           // Toast.makeText(getContext(), rating, Toast.LENGTH_LONG).show();
+                            textViewDialogContent.setText("You rated "+rating+"for this movie");
+
+                            Button button_Submit = view.findViewById(R.id.rank_dialog_button);
+                            button_Submit.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    rankDialog.dismiss();
+                                }
+                            });
+
+                            //now that the dialog is set up, it's time to show it
+                            rankDialog.show();
+                        }
+                    });*/
+
+
+
+                   ratingBar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                       @Override
+                       public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                           Toast.makeText(getContext(),"Rating bar is clicked: ", Toast.LENGTH_LONG).show();
+
+
+
+                           rankDialog = new Dialog(getContext(), R.style.FullHeightDialog);
+                           rankDialog.setContentView(R.layout.layout_rank_dialog);
+                           rankDialog.setCancelable(true);
+
+                           rateValue = String.valueOf(ratingBar1.getRating());
+                           Log.d(TAG,"Rating:"+rateValue);
+
+                          // Toast.makeText(getContext(),"Rating: "+rateValue,Toast.LENGTH_LONG).show();
+
+                            TextView textViewDialogContent = rankDialog.findViewById(R.id.tv_dialog_Content);
+                            textViewDialogContent.setText("You rated "+rateValue+" for this movie");
+                          // myTextView.setText(String.format("%2.1f", rating));
+
+                            Button button_Submit = rankDialog.findViewById(R.id.rank_dialog_button);
+                            button_Submit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            facebookPost();
+                            rankDialog.dismiss();
+                        }
+                    });
+
+
+                           //now that the dialog is set up, it's time to show it
+                           rankDialog.show();
+
+
+                       }
+                   });
+
+
+                   /* Button button_Submit = view.findViewById(R.id.rank_dialog_button);
+                    button_Submit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rankDialog.dismiss();
+                        }
+                    });*/
+
+                   /* buttonSubmit = view.findViewById(R.id.btn_submit);
 
                     buttonSubmit.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -146,7 +230,7 @@ public class MovieProfile2 extends Fragment {
 
 
                         }
-                    });
+                    });*/
 
 
 
@@ -204,7 +288,7 @@ public class MovieProfile2 extends Fragment {
 
             Log.d(TAG, "FB login Status" + "Signed Out");
 
-            String rating=String.valueOf(ratingBar.getRating());
+            String rating=String.valueOf(ratingBar1.getRating());
 
             Intent i = new Intent(getContext(),FacebookActivity.class);
             i.putExtra("movieId",id);
@@ -215,7 +299,7 @@ public class MovieProfile2 extends Fragment {
 
             Log.d(TAG, "FB login Status" + "Signed In");
 
-            String rating=String.valueOf(ratingBar.getRating());
+            String rating=String.valueOf(ratingBar1.getRating());
             Toast.makeText(getContext(), rating, Toast.LENGTH_LONG).show();
 
             Intent i = new Intent(getContext(),FacebookActivity.class);
