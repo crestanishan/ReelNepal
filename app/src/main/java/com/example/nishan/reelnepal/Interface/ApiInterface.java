@@ -3,6 +3,7 @@ package com.example.nishan.reelnepal.Interface;
 
 
 
+import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
 import com.example.nishan.reelnepal.Movie.MovieProfile;
 import com.example.nishan.reelnepal.Movie.MovieRating.Model.MovieRatingInsertModel;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Front_Models.Front;
@@ -45,6 +46,13 @@ public interface ApiInterface {
     Call<MovieRatingInsertModel> savePost(@Field("UserName") String UserName,
                                           @Field("MovieId")int MovieId,
                                           @Field("Rating") String Rating);
+
+    @GET("/api/movie/{id}/genres")
+    Call<MovieGenres> findGenres(@Path("id") int id);
+
+
+
+
 
 
 

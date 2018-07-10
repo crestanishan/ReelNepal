@@ -2,13 +2,13 @@ package com.example.nishan.reelnepal.Movie;
 
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +22,20 @@ import android.widget.Toast;
 import com.example.nishan.reelnepal.APIClient.APIClient;
 import com.example.nishan.reelnepal.Facebook.FacebookActivity;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
+import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
+import com.example.nishan.reelnepal.Movie.Genres.ResultItem;
 import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
-import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.MovieTagsAdapter;
 import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaliNewsModel.MovieTagsItem;
 import com.example.nishan.reelnepal.R;
-import com.example.nishan.reelnepal.Search.Actor;
 import com.facebook.AccessToken;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringJoiner;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +46,10 @@ public class MovieProfile2 extends Fragment {
     private static final String TAG = MovieProfile2.class.getSimpleName();
 
     MovieProfile movieInfo;
+
+    MovieGenres movieGenres;
+
+    List <ResultItem> result = new ArrayList<>();
 
     RatingBar ratingBar1;
 
@@ -68,7 +77,7 @@ public class MovieProfile2 extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_movie_profile, container,false);
         Log.d(TAG, "layout is working: "+ inflater.inflate(R.layout.activity_movie_profile, container,false));
 
@@ -141,35 +150,6 @@ public class MovieProfile2 extends Fragment {
 
                     ratingBar1 = view.findViewById(R.id.ratingBar);
 
-                   /* ratingBar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            Toast.makeText(getContext(),"Rating bar is clicked: ", Toast.LENGTH_LONG).show();
-
-
-
-                            rankDialog = new Dialog(getContext(), R.style.FullHeightDialog);
-                            rankDialog.setContentView(R.layout.layout_rank_dialog);
-                            rankDialog.setCancelable(true);
-
-                            String rating=String.valueOf(ratingBar.getRating());
-                           // Toast.makeText(getContext(), rating, Toast.LENGTH_LONG).show();
-                            textViewDialogContent.setText("You rated "+rating+"for this movie");
-
-                            Button button_Submit = view.findViewById(R.id.rank_dialog_button);
-                            button_Submit.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    rankDialog.dismiss();
-                                }
-                            });
-
-                            //now that the dialog is set up, it's time to show it
-                            rankDialog.show();
-                        }
-                    });*/
-
 
 
                    ratingBar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -211,28 +191,6 @@ public class MovieProfile2 extends Fragment {
                    });
 
 
-                   /* Button button_Submit = view.findViewById(R.id.rank_dialog_button);
-                    button_Submit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            rankDialog.dismiss();
-                        }
-                    });*/
-
-                   /* buttonSubmit = view.findViewById(R.id.btn_submit);
-
-                    buttonSubmit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            facebookPost();
-
-
-
-                        }
-                    });*/
-
-
 
                     if(movieInfo.getResult().getCoverPhoto() !=null && movieInfo.getResult().getCoverPhoto().length()>0)
                     {
@@ -267,6 +225,69 @@ public class MovieProfile2 extends Fragment {
             }
         });
 
+
+     //retrofit call for movie genres
+        Toast.makeText(getContext(),"Checking for genres",Toast.LENGTH_LONG).show();
+
+        ApiInterface apiInterface2= APIClient.getClient().create(ApiInterface.class);
+
+        Call<MovieGenres> call2 = apiInterface2.findGenres(id);
+        call2.enqueue(new Callback<MovieGenres>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<MovieGenres> call, Response<MovieGenres> response) {
+
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: " + response.body());
+                    Log.d(TAG, "onCode: " + response.code());
+
+                    movieGenres = response.body();
+
+                   // Toast.makeText(getContext(),"Movie Genres: "+movieGenres,Toast.LENGTH_LONG).show();
+
+                    result = movieGenres.getResult();
+
+                    String output = "";
+
+                  
+                    for (int i = 0; i < result.size(); i++) {
+                        //Append all the values to a string
+                        output += result.get(i).getGenreName();
+                        if (i != result.size()-1){
+                            output+= ","+" ";
+                        }
+
+
+                        Log.d(TAG, ":Genere Check: "+output);
+
+
+
+                        //Toast.makeText(getContext(),"Access array data: "+output,Toast.LENGTH_LONG).show();
+                    }
+
+
+
+                    //Set the textview to the output string
+
+                    TextView textViewGenres = view.findViewById(R.id.tv_Genre);
+                     textViewGenres.setText(output);
+
+
+                }
+
+
+                }
+
+
+
+
+            @Override
+            public void onFailure(Call<MovieGenres> call, Throwable t) {
+
+                Toast.makeText(getContext(), "Failed",Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
 
