@@ -3,6 +3,7 @@ package com.example.nishan.reelnepal.Interface;
 
 
 
+import com.example.nishan.reelnepal.Movie.Casts.MovieCasts;
 import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
 import com.example.nishan.reelnepal.Movie.MovieProfile;
 import com.example.nishan.reelnepal.Movie.MovieRating.Model.MovieRatingInsertModel;
@@ -49,6 +50,10 @@ public interface ApiInterface {
 
     @GET("/api/movie/{id}/genres")
     Call<MovieGenres> findGenres(@Path("id") int id);
+
+    @GET("/api/movie/{id}/casts")
+    Call<MovieCasts> findCast(@Path("id") int id);
+
 
 
 

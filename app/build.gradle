@@ -48,6 +48,10 @@ dependencies {
     //circular image
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    //material dialog box
+    implementation 'com.yarolegovich:lovely-dialog:1.1.0'
+
+
     //sectionedRecycleViewAdapter
     //implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
 

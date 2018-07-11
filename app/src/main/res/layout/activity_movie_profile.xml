@@ -14,7 +14,7 @@
             android:id="@+id/movie_image_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            android:background="#960707">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/movie_image"
@@ -122,6 +122,7 @@
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="#c0c0c0"
+            android:layout_marginTop="5dp"
             />
 
 
@@ -142,6 +143,7 @@
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="#c0c0c0"
+            android:layout_marginTop="5dp"
             android:layout_below="@+id/tv_Genre"/>
 
 
@@ -149,16 +151,33 @@
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:numStars="5"
             android:rating="3.5"
             android:stepSize="0.5"
             android:layout_gravity="center_horizontal"
             android:theme="@style/RatingBar"
-            android:background="@drawable/rating_border"
+
             />
+
+
+        <TextView
+            android:id="@+id/textview_movie_cast"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/cast"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:background="#fff"
+            android:textSize="20sp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="24dp"
+
+            />
+
 
 
     </LinearLayout>

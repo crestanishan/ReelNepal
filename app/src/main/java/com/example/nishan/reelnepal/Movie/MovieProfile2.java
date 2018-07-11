@@ -20,15 +20,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nishan.reelnepal.APIClient.APIClient;
+import com.example.nishan.reelnepal.Actor.ActorProfileActivity;
 import com.example.nishan.reelnepal.Facebook.FacebookActivity;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
+import com.example.nishan.reelnepal.Movie.Casts.MovieCasts;
 import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
 import com.example.nishan.reelnepal.Movie.Genres.ResultItem;
 import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaliNewsModel.MovieTagsItem;
 import com.example.nishan.reelnepal.R;
+import com.example.nishan.reelnepal.TestActivity;
 import com.facebook.AccessToken;
 import com.squareup.picasso.Picasso;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.json.JSONObject;
 
@@ -49,7 +53,11 @@ public class MovieProfile2 extends Fragment {
 
     MovieGenres movieGenres;
 
+    MovieCasts movieCasts;
+
     List <ResultItem> result = new ArrayList<>();
+
+    List <com.example.nishan.reelnepal.Movie.Casts.ResultItem> cast = new ArrayList<>();
 
     RatingBar ratingBar1;
 
@@ -161,9 +169,28 @@ public class MovieProfile2 extends Fragment {
 
                            Toast.makeText(getContext(),"Rating bar is clicked: ", Toast.LENGTH_LONG).show();
 
+                           // Intent intent = new Intent(getContext(), TestActivity.class);
+                            //getContext().startActivity(intent);
 
+                           rateValue = String.valueOf(ratingBar1.getRating());
 
-                           rankDialog = new Dialog(getContext(), R.style.FullHeightDialog);
+                           new LovelyStandardDialog(getContext())
+                                   .setTopColorRes(R.color.colorPrimaryDark)
+                                   .setIcon(R.drawable.ic_star_icon)
+                                   .setMessage("You rated "+rateValue+" for this movie")
+                                   .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                                       @Override
+                                       public void onClick(View v) {
+                                          // Toast.makeText(getApplicationContext(),"It is clicked",Toast.LENGTH_LONG).show();
+                                           facebookPost();
+                                       }
+                                   })
+
+                                   .setNegativeButton(android.R.string.no, null)
+                                   .show();
+                       }
+
+                          /* rankDialog = new Dialog(getContext(), R.style.FullHeightDialog);
                            rankDialog.setContentView(R.layout.layout_rank_dialog);
                            rankDialog.setCancelable(true);
 
@@ -187,11 +214,11 @@ public class MovieProfile2 extends Fragment {
 
 
                            //now that the dialog is set up, it's time to show it
-                           rankDialog.show();
+                           rankDialog.show();*/
 
 
-                       }
-                   });
+                       });
+
 
 
 
@@ -236,7 +263,7 @@ public class MovieProfile2 extends Fragment {
 
         Call<MovieGenres> call2 = apiInterface2.findGenres(id);
         call2.enqueue(new Callback<MovieGenres>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+
             @Override
             public void onResponse(Call<MovieGenres> call, Response<MovieGenres> response) {
 
@@ -273,7 +300,7 @@ public class MovieProfile2 extends Fragment {
                     //Set the textview to the output string
 
                     TextView textViewGenres = view.findViewById(R.id.tv_Genre);
-                     textViewGenres.setText(output);
+                     textViewGenres.setText("Genres: "+output);
 
 
                 }
@@ -291,6 +318,62 @@ public class MovieProfile2 extends Fragment {
 
             }
         });
+
+
+
+        //retrofit call for movieCast
+
+        ApiInterface apiInterface3= APIClient.getClient().create(ApiInterface.class);
+
+        Call<MovieCasts> call3 = apiInterface3.findCast(id);
+        call3.enqueue(new Callback<MovieCasts>() {
+            @Override
+            public void onResponse(Call<MovieCasts> call, Response<MovieCasts> response) {
+
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: " + response.body());
+                    Log.d(TAG, "onCode: " + response.code());
+
+                    movieCasts = response.body();
+
+                  // Toast.makeText(getContext(),"Movie Cast: "+movieCasts, Toast.LENGTH_LONG).show();
+
+                    cast = movieCasts.getResult();
+
+                    String output = "";
+
+
+                    for (int i = 0; i < cast.size(); i++) {
+                        //Append all the values to a string
+                        output = cast.get(i).getCrewName();
+                        //Toast.makeText(getContext(),"Access array data: "+output,Toast.LENGTH_LONG).show();
+                    }
+
+
+
+
+                    TextView textViewCastName = view.findViewById(R.id.textview_movie_cast);
+                    textViewCastName.setText("Cast: "+output);
+                    textViewCastName.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(getContext(), ActorProfileActivity.class);
+                            getContext().startActivity(i);
+                        }
+                    });
+                }
+
+                }
+
+            @Override
+            public void onFailure(Call<MovieCasts> call, Throwable t) {
+
+                Toast.makeText(getContext(), "Failed",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
 
 
 
