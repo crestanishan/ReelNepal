@@ -1,17 +1,6 @@
 package com.example.nishan.reelnepal.Movie;
 
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.nishan.reelnepal.APIClient.APIClient;
-import com.example.nishan.reelnepal.Interface.ApiInterface;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.support.constraint.Constraints.TAG;
+import com.example.nishan.reelnepal.Movie.MovieModels.MovieProfile;
 
 public class MovieInfo {
     private int ID;

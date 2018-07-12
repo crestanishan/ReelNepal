@@ -3,12 +3,9 @@ package com.example.nishan.reelnepal.Movie;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +23,10 @@ import com.example.nishan.reelnepal.Interface.ApiInterface;
 import com.example.nishan.reelnepal.Movie.Casts.MovieCasts;
 import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
 import com.example.nishan.reelnepal.Movie.Genres.ResultItem;
+import com.example.nishan.reelnepal.Movie.MovieModels.MovieProfile;
 import com.example.nishan.reelnepal.Movie.ScreenChanger.ScreenCheck;
 import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaliNewsModel.MovieTagsItem;
 import com.example.nishan.reelnepal.R;
-import com.example.nishan.reelnepal.TestActivity;
 import com.facebook.AccessToken;
 import com.squareup.picasso.Picasso;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
@@ -37,9 +34,7 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.StringJoiner;
 
 import retrofit2.Call;
 import retrofit2.Callback;

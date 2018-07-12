@@ -4,16 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +19,15 @@ import com.example.nishan.reelnepal.APIClient.APIClient;
 import com.example.nishan.reelnepal.Actor.ActorProfileActivity;
 import com.example.nishan.reelnepal.Facebook.FacebookActivity;
 import com.example.nishan.reelnepal.Interface.ApiInterface;
+import com.example.nishan.reelnepal.Movie.Casts.CastsAdapter;
 import com.example.nishan.reelnepal.Movie.Casts.MovieCasts;
 import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
 import com.example.nishan.reelnepal.Movie.Genres.ResultItem;
-import com.example.nishan.reelnepal.Navigation.NepaliNews_Nav.NepaliNewsModel.MovieTagsItem;
+import com.example.nishan.reelnepal.Movie.MovieModels.Cast;
+import com.example.nishan.reelnepal.Movie.MovieModels.Director;
+import com.example.nishan.reelnepal.Movie.MovieModels.MainCast;
+import com.example.nishan.reelnepal.Movie.MovieModels.MovieProfile;
+import com.example.nishan.reelnepal.Movie.MovieModels.Writer;
 import com.example.nishan.reelnepal.R;
 import com.example.nishan.reelnepal.Search.Actor;
 import com.facebook.AccessToken;
@@ -54,15 +57,19 @@ public class MovieProfileActivity extends Fragment {
 
     List <com.example.nishan.reelnepal.Movie.Casts.ResultItem> cast = new ArrayList<>();
 
+    List <MainCast> mainCastList = new ArrayList<>();
+
+    List <Director> directorList = new ArrayList<>();
+
+    List <Writer> writerList = new ArrayList<>();
+
     String rateValue;
 
     int id;
 
     RatingBar ratingBar1;
 
-    Button buttonSubmit;
 
-    FacebookActivity facebookActivity;
 
 
     public static MovieProfileActivity newInstance(Actor actor) {
@@ -97,12 +104,15 @@ public class MovieProfileActivity extends Fragment {
         Actor actor = (Actor) getArguments().getSerializable("actor");
 
         Log.d(TAG, "Actor Id: "+ actor.getId());
-        int id = actor.getId();
+        id = actor.getId();
+
+       // Toast.makeText(getContext(),"Movie Id: "+id,Toast.LENGTH_LONG).show();
 
 
 
-
-
+        final RecyclerView recyclerViewCast = view.findViewById(R.id.recyclerView_cast);
+        recyclerViewCast.setNestedScrollingEnabled(false);
+        recyclerViewCast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
 
 
@@ -147,6 +157,67 @@ public class MovieProfileActivity extends Fragment {
 
                     TextView textViewCertificate = view.findViewById(R.id.tv_Certificatet);
                     textViewCertificate.setText(movieInfo.getResult().getCensorCertificate());
+
+                    mainCastList = movieInfo.getResult().getMainCasts();
+
+                    directorList = movieInfo.getResult().getDirectors();
+
+                    writerList = movieInfo.getResult().getWriters();
+
+                    //for mainCast of movie
+                    String mCast = "";
+
+
+                    for (int i = 0; i < mainCastList.size(); i++) {
+                        //Append all the values to a string
+                        mCast += mainCastList.get(i).getCrewName();
+                        if (i != mainCastList.size()-1){
+                            mCast+= ","+" ";
+                        }
+
+                        //Toast.makeText(getContext(),"Access array data: "+output,Toast.LENGTH_LONG).show();
+                    }
+
+
+
+                    TextView textViewMainCast = view.findViewById(R.id.tv_MainCast);
+                    textViewMainCast.setText(mCast);
+
+
+                    // for movie director
+                    String director = "";
+
+
+                    for (int i = 0; i < directorList.size(); i++) {
+                        //Append all the values to a string
+                        director = directorList.get(i).getCrewName();
+                    }
+
+
+
+                    TextView textViewDirector = view.findViewById(R.id.tv_Director);
+                    textViewDirector.setText(director);
+
+                    // for movie writer
+                    String writer = "";
+
+
+                    for (int i = 0; i < writerList.size(); i++) {
+                        //Append all the values to a string
+                       writer =writerList.get(i).getCrewName();
+                    }
+
+
+
+                    TextView textViewWriter = view.findViewById(R.id.tv_Writer);
+                    textViewWriter.setText(writer);
+
+                    //getting list of arrays
+                    ArrayList<Cast> castItems = (ArrayList<Cast>) ((MovieProfile) response.body()).getResult().getCasts();
+
+                    //set adapter
+                    recyclerViewCast.setAdapter(new CastsAdapter(getContext(), castItems));
+
 
 
                     ImageView img = view.findViewById(R.id.movie_image);
@@ -292,7 +363,7 @@ public class MovieProfileActivity extends Fragment {
                     //Set the textview to the output string
 
                     TextView textViewGenres = view.findViewById(R.id.tv_Genre);
-                    textViewGenres.setText("Genres: "+output);
+                    textViewGenres.setText(output);
 
 
                 }

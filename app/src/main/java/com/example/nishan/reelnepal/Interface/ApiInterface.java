@@ -5,7 +5,7 @@ package com.example.nishan.reelnepal.Interface;
 
 import com.example.nishan.reelnepal.Movie.Casts.MovieCasts;
 import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
-import com.example.nishan.reelnepal.Movie.MovieProfile;
+import com.example.nishan.reelnepal.Movie.MovieModels.MovieProfile;
 import com.example.nishan.reelnepal.Movie.MovieRating.Model.MovieRatingInsertModel;
 import com.example.nishan.reelnepal.Navigation.Home_Nav.Front_Models.Front;
 import com.example.nishan.reelnepal.Navigation.MovieCalender_Nav.Calender_Models.Calender;
