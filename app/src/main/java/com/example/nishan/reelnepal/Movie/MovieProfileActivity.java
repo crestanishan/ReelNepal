@@ -25,6 +25,7 @@ import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
 import com.example.nishan.reelnepal.Movie.Genres.ResultItem;
 import com.example.nishan.reelnepal.Movie.MovieModels.Cast;
 import com.example.nishan.reelnepal.Movie.MovieModels.Director;
+import com.example.nishan.reelnepal.Movie.MovieModels.Genre;
 import com.example.nishan.reelnepal.Movie.MovieModels.MainCast;
 import com.example.nishan.reelnepal.Movie.MovieModels.MovieProfile;
 import com.example.nishan.reelnepal.Movie.MovieModels.Writer;
@@ -62,6 +63,8 @@ public class MovieProfileActivity extends Fragment {
     List <Director> directorList = new ArrayList<>();
 
     List <Writer> writerList = new ArrayList<>();
+
+    List <Genre> genreList = new ArrayList<>();
 
     String rateValue;
 
@@ -163,6 +166,26 @@ public class MovieProfileActivity extends Fragment {
                     directorList = movieInfo.getResult().getDirectors();
 
                     writerList = movieInfo.getResult().getWriters();
+
+                    genreList = movieInfo.getResult().getGenres();
+
+                    //for movie geners
+
+                    String genre = "";
+
+
+                    for (int i = 0; i < genreList.size(); i++) {
+                        //Append all the values to a string
+                        genre += genreList.get(i).getGenreName();
+                        if (i != genreList.size()-1){
+                            genre+= ","+" ";
+                        }
+
+                    }
+
+                    TextView textViewGenres = view.findViewById(R.id.tv_Genre);
+                    textViewGenres.setText(genre);
+
 
                     //for mainCast of movie
                     String mCast = "";
@@ -319,7 +342,7 @@ public class MovieProfileActivity extends Fragment {
         });
 
 
-        //retrofit call for movie genres
+     /*   //retrofit call for movie genres
         Toast.makeText(getContext(),"Checking for genres",Toast.LENGTH_LONG).show();
 
         ApiInterface apiInterface2= APIClient.getClient().create(ApiInterface.class);
@@ -380,11 +403,11 @@ public class MovieProfileActivity extends Fragment {
                 Toast.makeText(getContext(), "Failed",Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
 
 
-        //retrofit call for movieCast
+      /*  //retrofit call for movieCast
 
         ApiInterface apiInterface3= APIClient.getClient().create(ApiInterface.class);
 
@@ -434,7 +457,7 @@ public class MovieProfileActivity extends Fragment {
                 Toast.makeText(getContext(), "Failed",Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
 
 
