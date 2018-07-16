@@ -29,6 +29,8 @@
         <activity android:name=".Actor.ActorProfileActivity" />
         <activity android:name=".Activities.VideoPlayer" />
         <activity android:name=".Facebook.FacebookActivity" />
+        <activity android:name=".Movie.FullCrew" />
+        <activity android:name=".Movie.GroupBy.RolePlayDetails" />
         <activity
             android:name=".sample.SampleActivity"
             android:label="@string/title_activity_sample"

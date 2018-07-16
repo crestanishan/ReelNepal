@@ -317,6 +317,22 @@
         </android.support.v7.widget.RecyclerView>
 
 
+        <TextView
+            android:id="@+id/textview_FullCrew"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="FullCrew"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:background="#fff"
+            android:textSize="20sp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="24dp"
+
+            />
+
+
     </LinearLayout>
 
 </ScrollView>

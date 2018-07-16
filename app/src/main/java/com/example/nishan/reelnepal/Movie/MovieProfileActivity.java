@@ -23,8 +23,13 @@ import com.example.nishan.reelnepal.Movie.Casts.CastsAdapter;
 import com.example.nishan.reelnepal.Movie.Casts.MovieCasts;
 import com.example.nishan.reelnepal.Movie.Genres.MovieGenres;
 import com.example.nishan.reelnepal.Movie.Genres.ResultItem;
+import com.example.nishan.reelnepal.Movie.GroupBy.Adapter;
+import com.example.nishan.reelnepal.Movie.GroupBy.GeneralItem;
+import com.example.nishan.reelnepal.Movie.GroupBy.ListItem;
+import com.example.nishan.reelnepal.Movie.GroupBy.RoleNameItem;
 import com.example.nishan.reelnepal.Movie.MovieModels.Cast;
 import com.example.nishan.reelnepal.Movie.MovieModels.Director;
+import com.example.nishan.reelnepal.Movie.MovieModels.FullCrewList;
 import com.example.nishan.reelnepal.Movie.MovieModels.Genre;
 import com.example.nishan.reelnepal.Movie.MovieModels.MainCast;
 import com.example.nishan.reelnepal.Movie.MovieModels.MovieProfile;
@@ -38,7 +43,10 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,13 +58,6 @@ public class MovieProfileActivity extends Fragment {
 
     MovieProfile movieInfo;
 
-    MovieGenres movieGenres;
-
-    MovieCasts movieCasts;
-
-    List<ResultItem> result = new ArrayList<>();
-
-    List <com.example.nishan.reelnepal.Movie.Casts.ResultItem> cast = new ArrayList<>();
 
     List <MainCast> mainCastList = new ArrayList<>();
 
@@ -91,7 +92,7 @@ public class MovieProfileActivity extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_movie_profile, container,false);
         Log.d(TAG, "layout from search to profile is working: "+ inflater.inflate(R.layout.activity_movie_profile, container,false));
 
@@ -118,13 +119,7 @@ public class MovieProfileActivity extends Fragment {
         recyclerViewCast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
 
-
-
-
-
         ApiInterface apiInterface= APIClient.getClient().create(ApiInterface.class);
-
-
 
         Call<MovieProfile> call = apiInterface.findMovieInfo(id); // findMovieByID(),   findMovieByTag
         call.enqueue(new Callback<MovieProfile>() {
@@ -168,6 +163,9 @@ public class MovieProfileActivity extends Fragment {
                     writerList = movieInfo.getResult().getWriters();
 
                     genreList = movieInfo.getResult().getGenres();
+
+
+
 
                     //for movie geners
 
@@ -240,6 +238,16 @@ public class MovieProfileActivity extends Fragment {
 
                     //set adapter
                     recyclerViewCast.setAdapter(new CastsAdapter(getContext(), castItems));
+
+                    TextView textViewFullCast = view.findViewById(R.id.textview_FullCrew);
+                    textViewFullCast.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getContext(), FullCrew.class);
+                            intent.putExtra("ID",id);
+                            getContext().startActivity(intent);
+                        }
+                    });
 
 
 
@@ -466,6 +474,7 @@ public class MovieProfileActivity extends Fragment {
 
         return view;
     }
+
 
     private void getDataFromFB() {
 
